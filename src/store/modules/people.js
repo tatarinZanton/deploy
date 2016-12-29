@@ -20,9 +20,6 @@ const actions = {
           people: [{id: 1, name: 'Lee'}]
         })
       })
-      .catch(err => {
-
-      })
   }
 }
 
