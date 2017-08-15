@@ -11,9 +11,14 @@
     "test": "npm run unit"
   },
   "dependencies": {
+    "async": "^2.5.0",
+    "bootstrap-vue": "^0.22.0",
+    "mysql": "^2.14.1",
+    "socket.io": "^2.0.3",
     "vue": "^2.1.8",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.1",
+    "vue-socket.io": "^2.1.1-a",
     "vuex": "^2.1.1"
   },
   "devDependencies": {

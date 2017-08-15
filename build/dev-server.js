@@ -3,12 +3,26 @@ var config = require('../config')
 if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 var path = require('path')
 var express = require('express')
+var app = express()
+var server = require('http').Server(app)
+var io = require('socket.io')(server, {
+  serveClient: false,
+  wsEngine: 'ws' // uws is not supported since it is a native module
+})
 var webpack = require('webpack')
 var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
+var async = require('async')
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
+
+var db
+require('./server/db')().then(d => (db = d))
+
+io.on('connection', function (socket) {
+  require('./server/sockets')(db, async, socket)
+})
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -16,7 +30,6 @@ var port = process.env.PORT || config.dev.port
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
-var app = express()
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -59,7 +72,7 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-module.exports = app.listen(port, function (err) {
+module.exports = server.listen(port, function (err) {
   if (err) {
     console.log(err)
     return
