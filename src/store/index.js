@@ -1,11 +1,11 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
-import people from './modules/people'
+import Vuex from 'vuex'
+import Vue from 'vue'
+import companies from './modules/companies'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    people
+    companies
   }
 })
