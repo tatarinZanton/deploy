@@ -6,9 +6,19 @@
       <b-button>Архив</b-button>
       <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
       <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
-      <b-button v-on:click="showCompanyForm">Добавить компанию</b-button>
+      <router-link to="/company">
+        <b-button v-on:click="showCompanyForm">Добавить компанию</b-button>
+      </router-link>
     </b-button-group>
-
+    <b-alert variant="success" :show="showAlertDel">
+        Компания удалена!
+    </b-alert>
+    <b-alert variant="success" :show="showAlertDeploy">
+        Деплой готов!
+    </b-alert>
+    <b-alert variant="success" :show="showAlertUpdated.show">
+        Компания {{companies[showAlertUpdated.index] ? companies[showAlertUpdated.index].company_name : ''}} обновлена!
+    </b-alert>
     <div class="my-1 row justify-content-md-center">
       <div class="col-md-6">
         <b-form-input
@@ -60,6 +70,12 @@ export default {
   name: 'main',
   data () {
     return {
+      showAlertDel: false,
+      showAlertDeploy: false,
+      showAlertUpdated: {
+        show: false,
+        index: null
+      },
       fields: {
         id: { label: 'ID', sortable: true },
         company_name: { label: 'Компания', sortable: true },
@@ -80,10 +96,10 @@ export default {
     }
   },
   sockets: {
-    connect: function() {
-      console.log('socket connected')
-      // this.$socket.emit("getCompanies")
-    },
+    // connect: function() {
+    //   console.log('socket connected')
+    //   // this.$socket.emit("getCompanies")
+    // },
     resiveCompanies: function(companies){
       for (var i = 0; i < companies.length; i++) {
         companies[i].companyEdit = false;
@@ -97,25 +113,26 @@ export default {
     },
     success: function(data, index=null) {
       switch (data) {
-        case "companyAdd":
-          alert("Компания добавлена!");
-          this.newCompany = {};
-          this.$socket.emit("getCompanies");
-          break;
         case "companyDel":
-          alert("Компания удалена!");
-          this.$socket.emit("getCompanies");
-          break;
-        case "companyEdit":
-          alert("Компания изменена!");
-          this.$socket.emit("getCompanies");
+          this.showAlertDel = true
+          setTimeout(() => {
+            this.showAlertDel = false
+          }, 3000)
+          this.$socket.emit("getCompanies")
           break;
         case "prepareDeploy":
-          alert("Deploy готов!");
-          this.blockDeployBut = false;
+          this.showAlertDeploy = true
+          setTimeout(() => {
+            this.showAlertDeploy = false
+          }, 3000)
+          // this.blockDeployBut = false;
           break;
         case "updateClient":
-          alert("Компания "+ this.companies[index].company_name + " обновлена!");
+          this.showAlertUpdated.show = true
+          this.showAlertUpdated.index = index
+          setTimeout(() => {
+            this.showAlertUpdated.show = false
+          }, 3000)
           this.companies[index].companyUpBut = false;
           break;
       }
@@ -161,10 +178,6 @@ export default {
     },
     teest: function() {
       this.$socket.emit("getCompanies")
-    },
-    addCompany:function(e){
-      e.preventDefault();
-      this.$socket.emit('addCompany', this.newCompany);
     },
     deleteCompany: function(id) {
       this.$socket.emit("deleteCompany", id);

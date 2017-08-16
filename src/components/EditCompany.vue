@@ -11,15 +11,6 @@
       <input type="submit" name="addCompany">
     </form> -->
 
-    <!-- <form class="editCompany" v-on:submit.prevent="editCompany(company)">
-      Компания:<input type="text" name="companyName" v-model="company.company_name" >
-      IP:<input type="text" name="companyIP" v-model="company.ip_address" >
-      Порт:<input type="text" name="companyPort" v-model="company.port">
-      HostName <input type="text" name="hostname" v-model="company.hostname">
-      Оплата:<input type="checkbox" name="payment" v-model="company.payed">
-      Ключ TLS:<input type="text" name="tlsKey" v-model="company.tls_key">
-      <input type="submit" name="addCompany" value="Сохранить">
-    </form> -->
     <div class="my-1 row justify-content-md-center">
       <div class="col-md-4">
         <b-alert variant="success" :show="showAlert">
@@ -31,7 +22,6 @@
               v-model="company.company_name"
               type="text"
               placeholder="Enter company name"
-              :formatter="format"
             ></b-form-input>
           </b-form-fieldset>
           <b-form-fieldset horizontal label="IP" :label-cols="2">
@@ -39,7 +29,6 @@
               v-model="company.ip_address"
               type="text"
               placeholder="Enter IP"
-              :formatter="format"
             ></b-form-input>
           </b-form-fieldset>
           <b-form-fieldset horizontal label="Порт" :label-cols="2">
@@ -55,7 +44,6 @@
               v-model="company.hostname"
               type="text"
               placeholder="Enter hostname"
-              :formatter="format"
             ></b-form-input>
           </b-form-fieldset>
           <b-form-fieldset horizontal label="Оплата" :label-cols="2">
@@ -72,7 +60,6 @@
               v-model="company.tls_key"
               type="text"
               placeholder="Enter key"
-              :formatter="format"
             ></b-form-input>
           </b-form-fieldset>
           <router-link to="/">
@@ -95,6 +82,10 @@ export default {
     }
   },
   sockets: {
+    // connect: function() {
+    //   console.log('socket connected')
+    //   this.$socket.emit("getCompanies")
+    // },
     success: function(data, index=null) {
       if (data === "companyEdit") {
         this.showAlert = true
@@ -106,12 +97,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      'getPeople'
-    ]),
     editCompany: function() {
       this.$socket.emit("editCompany", this.company);
     },
+    format(value, el) {
+      return String(value)
+    }
   },
   computed: mapState({
     company: function(state) {
@@ -119,7 +110,9 @@ export default {
         return comp.length ? comp[0] : {}
     }
   }),
-
+  // created() {
+  //   console.log('created');
+  // }
 }
 </script>
 
