@@ -8,7 +8,7 @@ const state = {
 
 const mutations = {
   [constants.GET_COMPANIES] (state, { companies }) {
-    state.list = state.list.concat(companies)
+    state.list = companies
   }
 }
 

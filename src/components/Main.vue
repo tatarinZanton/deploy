@@ -38,12 +38,14 @@
       <template slot="conStatus" scope="row">{{row.value}}</template>
       <template slot="actions" scope="row">
         <b-btn size="sm" v-b-modal.confirmModal @click.stop="companyEditor = row">Удалить</b-btn>
-        <b-btn size="sm" @click.stop="editClient(row)">Редактировать</b-btn>
+        <router-link :to="{ path: `company/${row.item.id}` }">
+          <b-btn size="sm">Редактировать</b-btn>
+        </router-link>
         <b-btn size="sm" @click.stop="updateClient(row.company, row.index)">Обновить контейнер</b-btn>
       </template>
     </b-table>
 
-    <b-modal id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
+    <b-modal close-title="Cancel" id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
       Realy delete {{companyEditor.item ? companyEditor.item.company_name : ''}}?
     </b-modal>
 
@@ -163,9 +165,6 @@ export default {
     addCompany:function(e){
       e.preventDefault();
       this.$socket.emit('addCompany', this.newCompany);
-    },
-    editCompany:function(company){
-      this.$socket.emit("editCompany", company);
     },
     deleteCompany: function(id) {
       this.$socket.emit("deleteCompany", id);
