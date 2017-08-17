@@ -6,10 +6,10 @@ const hostname = company.hostname;
 
 const tls = require('tls');
 var fs = require('fs');
-var keyFileStr = 'server/certs/'+company.tls_key+'/client.key',
-    crtFileStr = 'server/certs/'+company.tls_key+'/client.crt',
-    caFileStr  = 'server/certs/'+company.tls_key+'/ca.crt';
-
+var keyFileStr = __dirname+'/certs/'+company.tls_key+'/client.key',
+    crtFileStr = __dirname+'/certs/'+company.tls_key+'/client.crt',
+    caFileStr  = __dirname+'/certs/'+company.tls_key+'/ca.crt';
+console.log();
 // Проверка существования сертификатов
 if (!fs.existsSync(keyFileStr) || !fs.existsSync(crtFileStr) || !fs.existsSync(caFileStr)) {
   socket.emit("certNotFound", index);
@@ -51,15 +51,16 @@ var socketTls = tls.connect(options, () => {
       break;
 
     default:
-    socket.emit("consoleOut", data, index);
+    socket.emit("consoleOut", {data, index});
     break;
   }
 
 })
 .on("error", function(err) {
   // socket.emit("error", err);
-  console.log(err);
-  socket.emit("connectionErr", err, index );
+  // console.log(index);
+  // console.log(err);
+  socket.emit("connectionErr", { index,err } );
   socket.emit("blockActions", index);
 })
 .on('end', () => {

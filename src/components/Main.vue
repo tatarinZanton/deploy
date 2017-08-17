@@ -144,12 +144,11 @@ export default {
       this.consoleDepMsg += msg
     },
     certNotFound: function(index) {
-      this.companies[index].conStatus = "tls not Found!";
-      console.log("Company "+ this.companies[index].company_name + " tls not found");
+      this.getCompaniesStatusTls(index)
     },
-    consoleOut: function(data, index) {
-      console.log(data);
-      this.companies[index].consoleOut += data + "|||";
+    consoleOut: function(data) {
+      console.dir(data);
+      this.companies[data.index].consoleOut += data + "|||";
     },
     prepareDeployErr: function(stderr, error) {
       console.dir(error);
@@ -159,15 +158,16 @@ export default {
       this.companies[index].conStatus = "Client connected!";
       // console.log("client " + app.companies[index].company_name + " connected");
     },
-    connectionErr: function (err, index) {
-      this.companies[index].conStatus = "connection Error";
-      console.log("Error on company " + this.companies[index].company_name);
+    connectionErr: function (err) {
       console.dir(err);
+      this.getCompaniesStatusErr(err)
     }
   },
   methods: {
     ...mapActions([
-      'getCompanies'
+      'getCompanies',
+      'getCompaniesStatusTls',
+      'getCompaniesStatusErr',
     ]),
     showCompanyForm: function() {
       this.formSeen = !this.formSeen;
