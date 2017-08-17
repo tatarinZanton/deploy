@@ -6,19 +6,13 @@
       <b-button>Архив</b-button>
       <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
       <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
-      <router-link to="/company">
-        <b-button v-on:click="showCompanyForm">Добавить компанию</b-button>
-      </router-link>
+      <b-button href="#/company/new">Добавить компанию</b-button>
     </b-button-group>
-    <b-alert variant="success" :show="showAlertDel">
-        Компания удалена!
+
+    <b-alert variant="success" :show="showAlert.show">
+        {{showAlert.msg}}
     </b-alert>
-    <b-alert variant="success" :show="showAlertDeploy">
-        Деплой готов!
-    </b-alert>
-    <b-alert variant="success" :show="showAlertUpdated.show">
-        Компания {{companies[showAlertUpdated.index] ? companies[showAlertUpdated.index].company_name : ''}} обновлена!
-    </b-alert>
+
     <div class="my-1 row justify-content-md-center">
       <div class="col-md-6">
         <b-form-input
@@ -72,9 +66,9 @@ export default {
     return {
       showAlertDel: false,
       showAlertDeploy: false,
-      showAlertUpdated: {
+      showAlert: {
         show: false,
-        index: null
+        msg: '',
       },
       fields: {
         id: { label: 'ID', sortable: true },
@@ -114,35 +108,25 @@ export default {
     success: function(data, index=null) {
       switch (data) {
         case "companyDel":
-          this.showAlertDel = true
-          setTimeout(() => {
-            this.showAlertDel = false
-          }, 3000)
+          this.showAlertMsg('Компания удалена!')
           this.$socket.emit("getCompanies")
           break;
         case "prepareDeploy":
-          this.showAlertDeploy = true
-          setTimeout(() => {
-            this.showAlertDeploy = false
-          }, 3000)
+          this.showAlertMsg('Деплой готов!')
           // this.blockDeployBut = false;
           break;
         case "updateClient":
-          this.showAlertUpdated.show = true
-          this.showAlertUpdated.index = index
-          setTimeout(() => {
-            this.showAlertUpdated.show = false
-          }, 3000)
-          this.companies[index].companyUpBut = false;
+          this.showAlertMsg(`Компания ${this.companies[index] ? this.companies[index].company_name : ''} обновлена!`)
+          // this.companies[index].companyUpBut = false;
           break;
       }
     },
-    unblock: function(index) {
-      this.companies[index].companyUpBut = false
-    },
-    deployConsole: function(msg) {
-      this.consoleDepMsg += msg
-    },
+    // unblock: function(index) {
+    //   this.companies[index].companyUpBut = false
+    // },
+    // deployConsole: function(msg) {
+    //   this.consoleDepMsg += msg
+    // },
     certNotFound: function(index) {
       this.getCompaniesStatusTls(index)
     },
@@ -169,6 +153,11 @@ export default {
       'getCompaniesStatusTls',
       'getCompaniesStatusErr',
     ]),
+    showAlertMsg: function (msg) {
+      this.showAlert.msg = msg
+      this.showAlert.show = true
+      setTimeout(() => (this.showAlert.show = false), 3000)
+    },
     showCompanyForm: function() {
       this.formSeen = !this.formSeen;
     },
@@ -205,7 +194,6 @@ export default {
         alert('Please enter your name');
         return e.cancel();
       }
-
       this.names.push(this.name);
       this.name = '';
     }

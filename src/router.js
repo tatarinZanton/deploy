@@ -4,24 +4,19 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/company/:id',
-    component: function(resolve){
-      require(['./components/EditCompany'], resolve)
-    }
-  },
+  { path: '/', redirect: { path: '/company' }},
   {
     path: '/company',
-    component: function(resolve){
-      require(['./components/NewCompany'], resolve)
-    }
+    component: resolve => require(['./components/List'], resolve)
   },
   {
-    path: '/',
-    component: function(resolve){
-      require(['./components/Main'], resolve)
-    }
-  }
+    path: '/company/:id',
+    component: resolve => require(['./components/EditCompany'], resolve)
+  },
+  {
+    path: '/company/new',
+    component: resolve => require(['./components/NewCompany'], resolve)
+  },
 ]
 
 export default new VueRouter({
