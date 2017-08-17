@@ -55,7 +55,7 @@
               :formatter="format"
             ></b-form-input>
           </b-form-fieldset>
-          <router-link to="/">
+          <router-link to="/companies">
             <b-button>Cancel</b-button>
           </router-link>
           <b-button variant="primary" type="submit">Add</b-button>
@@ -68,7 +68,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-  name: 'editCompany',
+  name: 'addCompany',
   data () {
     return {
       showAlert: false,
@@ -88,6 +88,7 @@ export default {
   },
   methods: {
     addCompany: function(){
+      console.log(this.company);
       this.$socket.emit('addCompany', this.company);
     },
   }

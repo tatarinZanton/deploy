@@ -4,9 +4,9 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: { path: '/company' }},
+  { path: '/', redirect: { path: '/companies' }},
   {
-    path: '/company',
+    path: '/companies',
     component: resolve => require(['./components/List'], resolve)
   },
   {
@@ -14,7 +14,7 @@ const routes = [
     component: resolve => require(['./components/EditCompany'], resolve)
   },
   {
-    path: '/company/new',
+    path: '/company',
     component: resolve => require(['./components/NewCompany'], resolve)
   },
 ]

@@ -62,7 +62,7 @@
               placeholder="Enter key"
             ></b-form-input>
           </b-form-fieldset>
-          <router-link to="/">
+          <router-link to="/companies">
             <b-button>Cancel</b-button>
           </router-link>
           <b-button variant="primary" type="submit">Save</b-button>
