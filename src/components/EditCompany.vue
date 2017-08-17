@@ -89,10 +89,7 @@ export default {
     success: function(data, index=null) {
       if (data === "companyEdit") {
         this.showAlert = true
-        setTimeout(() => {
-          this.showAlert = false
-        }, 3000)
-        this.$socket.emit("getCompanies")
+        setTimeout(() => this.$router.push('/companies'), 3000)
       }
     },
   },
@@ -109,10 +106,7 @@ export default {
         const comp = state.companies.list.filter(f => (String(this.$route.params.id) === String(f.id)))
         return comp.length ? comp[0] : {}
     }
-  }),
-  // created() {
-  //   console.log('created');
-  // }
+  })
 }
 </script>
 

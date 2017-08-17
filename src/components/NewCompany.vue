@@ -79,10 +79,7 @@ export default {
     success: function(data, index=null) {
       if (data === "companyAdd") {
         this.showAlert = true
-        setTimeout(() => {
-          this.showAlert = false
-        }, 3000)
-        this.$socket.emit("getCompanies")
+        setTimeout(() => this.$router.push('/companies'), 3000)
       }
     },
   },

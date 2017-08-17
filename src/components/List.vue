@@ -201,10 +201,9 @@ export default {
   computed: mapState({
     companies: state => state.companies.list
   }),
-  // created () {
-  //   console.log('sdf');
-  //   this.$socket.emit("getCompanies")
-  // }
+  created () {
+    this.$socket.emit("getCompanies")
+  }
 
 }
 </script>
