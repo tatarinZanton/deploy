@@ -10,7 +10,6 @@ var io = require('socket.io')(server, {
   wsEngine: 'ws' // uws is not supported since it is a native module
 })
 var webpack = require('webpack')
-var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
 var async = require('async')
 var webpackConfig = process.env.NODE_ENV === 'testing'
