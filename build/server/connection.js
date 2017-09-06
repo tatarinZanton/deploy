@@ -6,10 +6,11 @@ const hostname = company.hostname;
 
 const tls = require('tls');
 var fs = require('fs');
-var keyFileStr = __dirname+'/certs/'+company.tls_key+'/client.key',
-    crtFileStr = __dirname+'/certs/'+company.tls_key+'/client.crt',
-    caFileStr  = __dirname+'/certs/'+company.tls_key+'/ca.crt';
-console.log();
+
+var keyFileStr = __dirname + '/certs/'+company.tls_key+'/client.key',
+    crtFileStr = __dirname + '/certs/'+company.tls_key+'/client.crt',
+    caFileStr  = __dirname + '/certs/'+company.tls_key+'/ca.crt';
+
 // Проверка существования сертификатов
 if (!fs.existsSync(keyFileStr) || !fs.existsSync(crtFileStr) || !fs.existsSync(caFileStr)) {
   socket.emit("certNotFound", index);
@@ -42,14 +43,22 @@ var socketTls = tls.connect(options, () => {
 .setEncoding('utf8')
 
 .on('data', (data) => {
-
-  switch (data) {
+  data = JSON.parse(data);
+  console.log(data);
+  switch (data.type) {
     case 'doneUpdate':
-      console.log(data);
-      socket.emit("success", "updateClient", index);
+
+      socket.emit("success", {type:"updateClient", index, status:data.status});
       // socketTls.end();
       break;
+    case 'resiveCommits':
+      console.log(data);
+      socket.emit("resiveCommits", {data, index});
+      // socketTls.end();
+      break;
+    case '':
 
+      break;
     default:
     socket.emit("consoleOut", {data, index});
     break;
@@ -58,10 +67,9 @@ var socketTls = tls.connect(options, () => {
 })
 .on("error", function(err) {
   // socket.emit("error", err);
-  // console.log(index);
   // console.log(err);
-  socket.emit("connectionErr", { index,err } );
-  socket.emit("blockActions", index);
+  socket.emit("connectionErr", {err, index} );
+  socket.emit("blockActions", {index});
 })
 .on('end', () => {
   console.log("End connection");
