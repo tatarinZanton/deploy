@@ -75,19 +75,22 @@ export default {
       company: {}
     }
   },
-  sockets: {
-    success: function(data, index=null) {
+  methods: {
+    addCompany: function(){
+      console.log(this.company);
+      this.socket.emit('addCompany', this.company);
+    },
+  },
+  computed: mapState({
+    socket: state => state.connection.socket
+  }),
+  created: function(){
+    this.socket.on('success', (data, index=null) => {
       if (data === "companyAdd") {
         this.showAlert = true
         setTimeout(() => this.$router.push('/companies'), 3000)
       }
-    },
-  },
-  methods: {
-    addCompany: function(){
-      console.log(this.company);
-      this.$socket.emit('addCompany', this.company);
-    },
+    })
   }
 }
 </script>

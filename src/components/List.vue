@@ -187,8 +187,8 @@ export default {
       // console.log("client " + app.companies[index].company_name + " connected")
     })
     this.socket.on('connectionErr', err => {
-        console.dir(err);
-        this.getCompaniesStatusErr(err)
+      console.dir(err);
+      this.getCompaniesStatusErr(err)
     })
   }
 }
@@ -196,7 +196,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  /*.filter {
-    width: 100%;
-  }*/
+
 </style>
