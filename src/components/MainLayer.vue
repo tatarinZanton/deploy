@@ -3,11 +3,15 @@
     <div>
         <!-- Modal Component -->
         <b-modal
-          id="modal1"
-          ref="modal1"
-          title="Connecting"
+          id="connectionModal"
+          hide-header-close
+          hide-header
+          hide-footer
+          :visible="connected"
+          no-close-on-backdrop
          >
           <h1>Connecting</h1>
+          <b-progress :value="100" animated></b-progress>
         </b-modal>
     </div>
 </template>
@@ -17,28 +21,18 @@
   import io from 'socket.io-client'
   import socket from '../main'
   export default {
-    // data () {
-    //   return {
-    //   }
-    // },
     methods: {
       ...mapActions([
         'setConnection',
       ]),
-      // handleSubmit() {
-      //   this.names.push(this.name);
-      //   this.clearName();
-      //   this.$refs.modal1.hide()
-      // }
     },
+    computed: mapState({
+      connected: state => !state.connection.connected
+    }),
     created: function(){
       const socket = io(server) // io - socket initializing, server - global var from WebPack
-      socket.on('connect', () => {
-        console.log(socket.id)
-        this.$refs.modal1.show()
-      });
-      // this.setConnection(err)
-      // this.$refs.modal1.show();
+      socket.on('connect', () => this.setConnection(true))
+      socket.on('disconnect', () => this.setConnection(false))
     }
   }
 </script>

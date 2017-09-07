@@ -1,27 +1,26 @@
 import Vue from 'vue'
 import * as constants from '../mutations'
-// import * as apis from '../../api'
 
 const state = {
   connected: false,
 }
 
 const mutations = {
-  [constants.SOCKETS_CONNECTED] (state, { connected }) {
-    state.connected = connected
+  [constants.SOCKETS_CONNECTION] (state, { flag }) {
+    state.connected = flag
   },
 }
 
 const actions = {
   setConnection({commit}, flag) {
-    commit(constants.SOCKETS_CONNECTED, {
+    commit(constants.SOCKETS_CONNECTION, {
       flag
     })
   },
 }
 
 const getters = {
-  connection: state => state.connected,
+  connected: state => state.connected,
 }
 
 export default {
