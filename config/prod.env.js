@@ -3,5 +3,5 @@ module.exports = {
   dbUser  : 'root',
   dbPasswd : 'adm/leg87',
   dbName   : 'billing',
-  NODE_ENV: '"production"'
+  NODE_ENV: 'production'
 }

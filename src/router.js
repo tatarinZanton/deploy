@@ -4,7 +4,10 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: { path: '/companies' }},
+  { path: '/',
+    // redirect: { path: '/companies' },
+    component: resolve => require(['./components/MainLayer'], resolve)
+  },
   {
     path: '/companies',
     component: resolve => require(['./components/List'], resolve)

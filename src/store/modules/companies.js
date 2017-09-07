@@ -26,7 +26,7 @@ const mutations = {
       }
       return c
     })
-  },
+  }
 }
 
 const actions = {
