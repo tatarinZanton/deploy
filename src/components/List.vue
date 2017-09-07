@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <b-button-group>
-      <b-button v-on:click="teest">Компании</b-button>
+      <b-button>Компании</b-button>
       <b-button>Логи</b-button>
       <b-button>Архив</b-button>
       <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
@@ -89,64 +89,6 @@ export default {
       consoleShow: false
     }
   },
-  sockets: {
-    // connect: function() {
-    //   console.log('socket connected')
-    //   // this.$socket.emit("getCompanies")
-    // },
-    resiveCompanies: function(companies){
-      for (var i = 0; i < companies.length; i++) {
-        companies[i].companyEdit = false;
-        companies[i].companyUpBut = false;
-        companies[i].consoleOut="";
-        companies[i].conStatus="";
-      }
-      this.getCompanies(companies)
-      console.dir(companies);
-      this.$socket.emit("initConnection", companies);
-    },
-    success: function(data, index=null) {
-      switch (data) {
-        case "companyDel":
-          this.showAlertMsg('Компания удалена!')
-          this.$socket.emit("getCompanies")
-          break;
-        case "prepareDeploy":
-          this.showAlertMsg('Деплой готов!')
-          // this.blockDeployBut = false;
-          break;
-        case "updateClient":
-          this.showAlertMsg(`Компания ${this.companies[index] ? this.companies[index].company_name : ''} обновлена!`)
-          // this.companies[index].companyUpBut = false;
-          break;
-      }
-    },
-    // unblock: function(index) {
-    //   this.companies[index].companyUpBut = false
-    // },
-    // deployConsole: function(msg) {
-    //   this.consoleDepMsg += msg
-    // },
-    certNotFound: function(index) {
-      this.getCompaniesStatusTls(index)
-    },
-    consoleOut: function(data) {
-      console.dir(data);
-      this.companies[data.index].consoleOut += data + "|||";
-    },
-    prepareDeployErr: function(stderr, error) {
-      console.dir(error);
-      console.dir(stderr);
-    },
-    clientConnected: function(index) {
-      this.companies[index].conStatus = "Client connected!";
-      // console.log("client " + app.companies[index].company_name + " connected");
-    },
-    connectionErr: function (err) {
-      console.dir(err);
-      this.getCompaniesStatusErr(err)
-    }
-  },
   methods: {
     ...mapActions([
       'getCompanies',
@@ -164,9 +106,6 @@ export default {
     editClient: function(company) {
       this.showModal = true
       this.companyEditor = company
-    },
-    teest: function() {
-      this.$socket.emit("getCompanies")
     },
     deleteCompany: function(id) {
       this.$socket.emit("deleteCompany", id);
@@ -199,12 +138,59 @@ export default {
     }
   },
   computed: mapState({
-    companies: state => state.companies.list
+    companies: state => state.companies.list,
+    socket: state => state.connection.socket
   }),
-  created () {
-    this.$socket.emit("getCompanies")
+  created: function() {
+    this.socket.emit("getCompanies")
+    this.socket.on('resiveCompanies', companies => {
+      for (var i = 0; i < companies.length; i++) {
+        companies[i].companyEdit = false;
+        companies[i].companyUpBut = false;
+        companies[i].consoleOut="";
+        companies[i].conStatus="";
+      }
+      this.getCompanies(companies)
+      console.dir(companies);
+      this.socket.emit("initConnection", companies);
+    })
+    this.socket.on('success', (data, index=null) => {
+      switch (data) {
+        case "companyDel":
+          this.showAlertMsg('Компания удалена!')
+          this.$socket.emit("getCompanies")
+          break;
+        case "prepareDeploy":
+          this.showAlertMsg('Деплой готов!')
+          // this.blockDeployBut = false;
+          break;
+        case "updateClient":
+          this.showAlertMsg(`Компания ${this.companies[index] ? this.companies[index].company_name : ''} обновлена!`)
+          // this.companies[index].companyUpBut = false;
+          break;
+      }
+      this.socket.emit("getCompanies")
+    })
+    this.socket.on('certNotFound', index => {
+      this.getCompaniesStatusTls(index)
+    })
+    this.socket.on('consoleOut', data => {
+      console.dir(data);
+      this.companies[data.index].consoleOut += data + "|||";
+    })
+    this.socket.on('prepareDeployErr', (stderr, error) => {
+      console.dir(error);
+      console.dir(stderr);
+    })
+    this.socket.on('clientConnected', index => {
+      this.companies[index].conStatus = "Client connected!"
+      // console.log("client " + app.companies[index].company_name + " connected")
+    })
+    this.socket.on('connectionErr', err => {
+        console.dir(err);
+        this.getCompaniesStatusErr(err)
+    })
   }
-
 }
 </script>
 

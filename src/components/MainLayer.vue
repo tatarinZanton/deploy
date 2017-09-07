@@ -20,20 +20,21 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import io from 'socket.io-client'
-  import socket from '../main'
   export default {
     methods: {
       ...mapActions([
         'setConnection',
+        'setSocket'
       ]),
     },
     computed: mapState({
-      connected: state => !state.connection.connected
+      connected: state => !state.connection.connected,
+      socket: state => state.connection.socket
     }),
     created: function(){
-      const socket = io(server) // io - socket initializing, server - global var from WebPack
-      socket.on('connect', () => this.setConnection(true))
-      socket.on('disconnect', () => this.setConnection(false))
+      this.setSocket(io(server))// io - socket initializing, server - global var from WebPack
+      this.socket.on('connect', () => this.setConnection(true))
+      this.socket.on('disconnect', () => this.setConnection(false))
     }
   }
 </script>

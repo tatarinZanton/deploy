@@ -9,6 +9,9 @@ const mutations = {
   [constants.SOCKETS_CONNECTION] (state, { flag }) {
     state.connected = flag
   },
+  [constants.SOCKETS] (state, { socket }) {
+    state.socket = socket
+  },
 }
 
 const actions = {
@@ -17,10 +20,16 @@ const actions = {
       flag
     })
   },
+  setSocket({commit}, socket) {
+    commit(constants.SOCKETS, {
+      socket
+    })
+  },
 }
 
 const getters = {
   connected: state => state.connected,
+  socket: state => state.socket,
 }
 
 export default {
