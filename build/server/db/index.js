@@ -3,10 +3,10 @@ var config = process.env.NODE_ENV === 'production' ? require('../../../config').
 var db = require('./class');
 
 var connection =  mysql.createConnection({
-  host      : config.dbUrl,
-  user      : config.dbUser,
-  password  : config.dbPasswd,
-  database  : config.dbName,
+  host      : config.dbUrl.replace (/"/g, ""),
+  user      : config.dbUser.replace (/"/g, ""),
+  password  : config.dbPasswd.replace (/"/g, ""),
+  database  : config.dbName.replace (/"/g, ""),
   multipleStatements: true
 });;
 
