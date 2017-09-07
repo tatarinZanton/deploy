@@ -13,6 +13,7 @@
           <h1>Connecting</h1>
           <b-progress :value="100" animated></b-progress>
         </b-modal>
+        <router-view></router-view>
     </div>
 </template>
 
