@@ -81,21 +81,9 @@ export default {
       showAlert: false,
     }
   },
-  sockets: {
-    // connect: function() {
-    //   console.log('socket connected')
-    //   this.$socket.emit("getCompanies")
-    // },
-    success: function(data, index=null) {
-      if (data === "companyEdit") {
-        this.showAlert = true
-        setTimeout(() => this.$router.push('/companies'), 3000)
-      }
-    },
-  },
   methods: {
     editCompany: function() {
-      this.$socket.emit("editCompany", this.company);
+      this.socket.emit("editCompany", this.company);
     },
     format(value, el) {
       return String(value)
@@ -105,8 +93,18 @@ export default {
     company: function(state) {
         const comp = state.companies.list.filter(f => (String(this.$route.params.id) === String(f.id)))
         return comp.length ? comp[0] : {}
-    }
-  })
+    },
+    socket: state => state.connection.socket
+  }),
+  created: function(){
+    this.socket.on('success', (data, index=null) => {
+      if (data === "companyEdit") {
+        this.showAlert = true
+        setTimeout(() => this.$router.push('/companies'), 3000)
+      }
+    })
+    //   this.$socket.emit("getCompanies")
+  }
 }
 </script>
 
