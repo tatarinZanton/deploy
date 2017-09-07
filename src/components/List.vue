@@ -108,20 +108,20 @@ export default {
       this.companyEditor = company
     },
     deleteCompany: function(id) {
-      this.$socket.emit("deleteCompany", id);
+      this.socket.emit("deleteCompany", id);
     },
     prepareDeploy : function(){
       app.blockDeployBut = true;
-      this.$socket.emit("prepareDeploy");
+      this.socket.emit("prepareDeploy");
     },
     updateClient:function(company, index){
       app.companies[index].companyUpBut = true;
-      this.$socket.emit("updateClient",  company, index);
+      this.socket.emit("updateClient",  company, index);
     },
     updateAll:function() {
       for (var i = 0; i < app.companies.length; i++) {
         if (app.companies[i].payed) {
-            this.$socket.emit("updateClient", app.companies[i], i);
+            this.socket.emit("updateClient", app.companies[i], i);
         }
       }
     },
@@ -158,7 +158,7 @@ export default {
       switch (data) {
         case "companyDel":
           this.showAlertMsg('Компания удалена!')
-          this.$socket.emit("getCompanies")
+          this.socket.emit("getCompanies")
           break;
         case "prepareDeploy":
           this.showAlertMsg('Деплой готов!')

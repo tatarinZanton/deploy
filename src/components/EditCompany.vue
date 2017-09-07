@@ -94,16 +94,20 @@ export default {
         const comp = state.companies.list.filter(f => (String(this.$route.params.id) === String(f.id)))
         return comp.length ? comp[0] : {}
     },
-    socket: state => state.connection.socket
+    socket: state => state.connection.socket,
+    connected: state => state.connection.connected,
+    companies: state => state.companies.list,
   }),
   created: function(){
+    if (!this.companies.length && !this.connected) {
+      this.socket.emit("getCompanies")
+    }
     this.socket.on('success', (data, index=null) => {
       if (data === "companyEdit") {
         this.showAlert = true
         setTimeout(() => this.$router.push('/companies'), 3000)
       }
     })
-    //   this.$socket.emit("getCompanies")
   }
 }
 </script>

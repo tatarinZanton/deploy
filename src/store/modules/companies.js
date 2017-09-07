@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import * as constants from '../mutations'
-// import * as apis from '../../api'
 
 const state = {
   list: [],
