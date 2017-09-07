@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'getCompanies',
+    ]),
     editCompany: function() {
       this.socket.emit("editCompany", this.company);
     },
@@ -99,9 +102,12 @@ export default {
     companies: state => state.companies.list,
   }),
   created: function(){
-    if (!this.companies.length && !this.connected) {
-      this.socket.emit("getCompanies")
-    }
+    this.socket.on('connect', () => {
+      if (!this.companies.length) {
+        this.socket.emit("getCompanies")
+        this.socket.on('resiveCompanies', companies => this.getCompanies(companies))
+      }
+    })
     this.socket.on('success', (data, index=null) => {
       if (data === "companyEdit") {
         this.showAlert = true

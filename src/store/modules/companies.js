@@ -30,8 +30,9 @@ const mutations = {
 
 const actions = {
   getCompanies({commit}, params) {
+    const comp = params.map(c => ({ ...c, companyEdit: false, companyUpBut: false, consoleOut: '', conStatus: '' }))
     commit(constants.GET_COMPANIES, {
-      companies: params
+      companies: comp
     })
   },
   getCompaniesStatusTls({commit}, index) {

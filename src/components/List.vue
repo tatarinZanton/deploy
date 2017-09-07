@@ -144,15 +144,8 @@ export default {
   created: function() {
     this.socket.emit("getCompanies")
     this.socket.on('resiveCompanies', companies => {
-      for (var i = 0; i < companies.length; i++) {
-        companies[i].companyEdit = false;
-        companies[i].companyUpBut = false;
-        companies[i].consoleOut="";
-        companies[i].conStatus="";
-      }
       this.getCompanies(companies)
-      console.dir(companies);
-      this.socket.emit("initConnection", companies);
+      this.socket.emit("initConnection", this.companies)
     })
     this.socket.on('success', (data, index=null) => {
       switch (data) {
@@ -169,7 +162,6 @@ export default {
           // this.companies[index].companyUpBut = false;
           break;
       }
-      this.socket.emit("getCompanies")
     })
     this.socket.on('certNotFound', index => {
       this.getCompaniesStatusTls(index)
@@ -186,10 +178,7 @@ export default {
       this.companies[index].conStatus = "Client connected!"
       // console.log("client " + app.companies[index].company_name + " connected")
     })
-    this.socket.on('connectionErr', err => {
-      console.dir(err);
-      this.getCompaniesStatusErr(err)
-    })
+    this.socket.on('connectionErr', err => this.getCompaniesStatusErr(err))
   }
 }
 </script>
