@@ -16,19 +16,19 @@ commands = [
 ],
 options = { cwd: '/var/www/billing-system',
             onData: function(data){
-              console.log(data);
+              socket.emit("prepareDeployConsole", data);
+
             },
             onError: function(err){
-              console.log(err);
+              socket.emit("prepareDeployConsole", err);
             },
-            onDone: function(data){
-              console.log(data);
-              // socket.emit("success", "prepareDeploy");
-            },
+            // onDone: function(data){
+            //   socket.emit("prepareDeployConsole", data);
+            // },
 
           };
 
-nrc.run(commands, options);
+nrc.run(commands, options).then(e=>socket.emit("prepareDeploySuccess"));
 
 }
 module.exports = run;

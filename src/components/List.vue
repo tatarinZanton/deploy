@@ -48,7 +48,9 @@
         <b-btn size="sm" @click.stop="updateClient(row.company, row.index)">Обновить контейнер</b-btn>
       </template>
     </b-table>
-
+    <div>
+      {{prepareDeployConsole}}
+    </div>
     <b-modal close-title="Cancel" id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
       Realy delete {{companyEditor.item ? companyEditor.item.company_name : ''}}?
     </b-modal>
@@ -94,6 +96,7 @@ export default {
       'getCompanies',
       'getCompaniesStatusTls',
       'getCompaniesStatusErr',
+      'addPrepareDeployConsole',
     ]),
     showAlertMsg: function (msg) {
       this.showAlert.msg = msg
@@ -139,7 +142,9 @@ export default {
   },
   computed: mapState({
     companies: state => state.companies.list,
-    socket: state => state.connection.socket
+    socket: state => state.connection.socket,
+    prepareDeployConsole: state => state.companies.consoleFull
+
   }),
   created: function() {
     this.socket.emit("getCompanies")
@@ -163,6 +168,9 @@ export default {
           break;
       }
     })
+    this.socket.on('prepareDeployConsole', data => {
+      this.addPrepareDeployConsole(data);
+    });
     this.socket.on('certNotFound', index => {
       this.getCompaniesStatusTls(index)
     })

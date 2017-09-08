@@ -3,6 +3,7 @@ import * as constants from '../mutations'
 
 const state = {
   list: [],
+  consoleFull: "",
 }
 
 const mutations = {
@@ -25,7 +26,10 @@ const mutations = {
       }
       return c
     })
-  }
+  },
+  [constants.ADD_PREPARE_DEPLOY_CONSOLE] (state, { data }) {
+    state.consoleFull += data
+  },
 }
 
 const actions = {
@@ -46,10 +50,16 @@ const actions = {
       err
     })
   },
+  addPrepareDeployConsole({commit}, data){
+    commit(constants.ADD_PREPARE_DEPLOY_CONSOLE, {
+      data
+    })
+  }
 }
 
 const getters = {
   companies: state => state.list,
+  prepareDeployConsole : state => state.consoleFull,
 }
 
 export default {
