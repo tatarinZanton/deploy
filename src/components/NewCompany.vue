@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   name: 'addCompany',
   data () {
@@ -81,9 +81,11 @@ export default {
       this.socket.emit('addCompany', this.company);
     },
   },
-  computed: mapState({
-    socket: state => state.connection.socket
-  }),
+  computed: {
+    ...mapGetters([
+        'socket',
+      ])
+  },
   created: function(){
     this.socket.on('success', (data, index=null) => {
       if (data === "companyAdd") {

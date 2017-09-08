@@ -7,7 +7,7 @@
           hide-header-close
           hide-header
           hide-footer
-          :visible="connected"
+          :visible="!connected"
           no-close-on-backdrop
          >
           <h1>Connecting</h1>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions, mapState, mapGetters } from 'vuex'
   import io from 'socket.io-client'
   export default {
     methods: {
@@ -27,10 +27,12 @@
         'setSocket'
       ]),
     },
-    computed: mapState({
-      connected: state => !state.connection.connected,
-      socket: state => state.connection.socket
-    }),
+    computed: {
+      ...mapGetters([
+          'connected',
+          'socket',
+        ])
+    },
     created: function(){
       this.setSocket(io(server))// io - socket initializing, server - global var from WebPack
       this.socket.on('connect', () => this.setConnection(true))

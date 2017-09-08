@@ -60,7 +60,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'main',
@@ -140,12 +140,13 @@ export default {
       this.name = '';
     }
   },
-  computed: mapState({
-    companies: state => state.companies.list,
-    socket: state => state.connection.socket,
-    prepareDeployConsole: state => state.companies.consoleFull
-
-  }),
+  computed: {
+    ...mapGetters([
+        'companies',
+        'prepareDeployConsole',
+        'socket',
+      ])
+  },
   created: function() {
     this.socket.emit("getCompanies")
     this.socket.on('resiveCompanies', companies => {

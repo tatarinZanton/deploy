@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   name: 'editCompany',
   data () {
@@ -92,15 +92,16 @@ export default {
       return String(value)
     }
   },
-  computed: mapState({
-    company: function(state) {
-        const comp = state.companies.list.filter(f => (String(this.$route.params.id) === String(f.id)))
-        return comp.length ? comp[0] : {}
-    },
-    socket: state => state.connection.socket,
-    connected: state => state.connection.connected,
-    companies: state => state.companies.list,
-  }),
+  computed: {
+    ...mapGetters([
+        'socket',
+        'connected',
+        'companies',
+      ]),
+      company() {
+        return this.$store.getters.company(this.$route.params.id)
+      }
+  },
   created: function(){
     this.socket.on('connect', () => {
       if (!this.companies.length) {

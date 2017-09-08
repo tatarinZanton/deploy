@@ -10,7 +10,7 @@ const routes = [
     children: [
       {
         path: 'companies',
-        component: resolve => require(['./components/List'], resolve)
+        component: resolve => require(['./components/Companies'], resolve)
       },
       {
         path: 'company/:id',

@@ -59,7 +59,11 @@ const actions = {
 
 const getters = {
   companies: state => state.list,
-  prepareDeployConsole : state => state.consoleFull,
+  company: (state, getters) => (id) => {
+    const comp = getters.companies.filter(f => (String(id) === String(f.id)))
+    return comp.length ? comp[0] : {}
+  },
+  prepareDeployConsole: state => state.consoleFull,
 }
 
 export default {
