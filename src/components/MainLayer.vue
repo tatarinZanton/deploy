@@ -1,7 +1,29 @@
 
 <template>
     <div>
-        <!-- Modal Component -->
+        <b-navbar toggleable=:true type="light" variant="info">
+          <b-nav-toggle target="nav_collapse"></b-nav-toggle>
+          <b-navbar-brand href="#">Navion deployer</b-navbar-brand>
+          <b-collapse is-nav id="nav_collapse">
+
+            <b-nav is-nav-bar>
+              <b-nav-item href="#/companies">Companies</b-nav-item>
+              <b-nav-item href="#">Logs</b-nav-item>
+            </b-nav>
+
+            <!-- Right aligned nav items -->
+            <!-- <b-nav is-nav-bar class="ml-auto">
+              <b-nav-item-dropdown right>
+                <template slot="button-content">
+                  <em>User</em>
+                </template>
+                <b-dropdown-item href="#">Profile</b-dropdown-item>
+                <b-dropdown-item href="#">Signout</b-dropdown-item>
+              </b-nav-item-dropdown>
+            </b-nav> -->
+          </b-collapse>
+        </b-navbar>
+        <img src="../assets/logo.png">
         <b-modal
           id="connectionModal"
           hide-header-close

@@ -1,13 +1,6 @@
 <template>
   <div class="main">
-    <b-button-group>
-      <b-button>Компании</b-button>
-      <b-button>Логи</b-button>
-      <b-button>Архив</b-button>
-      <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
-      <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
-      <b-button href="#/company">Добавить компанию</b-button>
-    </b-button-group>
+
 
     <b-alert variant="success" :show="showAlert.show">
         {{showAlert.msg}}
@@ -21,6 +14,13 @@
           :formatter="format"
           lazy-formatter
         />
+      </div>
+      <div class="col-md-5">
+        <b-button-group>
+          <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
+          <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
+          <b-button href="#/company">Добавить компанию</b-button>
+        </b-button-group>
       </div>
     </div>
 
