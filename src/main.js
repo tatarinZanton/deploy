@@ -12,6 +12,7 @@ Vue.use(VueResource)
 Vue.use(BootstrapVue)
 
 /* eslint-disable no-new */
+
 new Vue({
   template: '<App/>',
   components: { App },

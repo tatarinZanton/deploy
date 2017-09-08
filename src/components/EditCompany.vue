@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="edit-company">
     <h1>{{ company.company_name }}</h1>
     <!-- <form class="companyForm" id="addCompany" method="post" v-on:submit="addCompany" >
       Компания:<input type="text" name="companyName" v-model="newCompany.company_name">
@@ -121,5 +121,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .edit-company {
+    text-align: center;
+  }
 </style>

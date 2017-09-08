@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <b-navbar toggleable=:true type="light" variant="info">
+        <b-navbar toggleable type="dark" variant="light">
           <b-nav-toggle target="nav_collapse"></b-nav-toggle>
           <b-navbar-brand href="#">Navion deployer</b-navbar-brand>
           <b-collapse is-nav id="nav_collapse">
@@ -23,7 +23,9 @@
             </b-nav> -->
           </b-collapse>
         </b-navbar>
-        <img src="../assets/logo.png">
+        <div class="logo">
+          <img src="../assets/logo.png" width="150px" height="150px">
+        </div>
         <b-modal
           id="connectionModal"
           hide-header-close
@@ -65,5 +67,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .logo {
+    text-align: center;
+  }
 </style>
