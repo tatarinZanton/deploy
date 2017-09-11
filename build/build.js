@@ -5,6 +5,7 @@ env.NODE_ENV = 'production'
 
 var path = require('path')
 var config = require('../config')
+env.PORT = config.build.port
 var ora = require('ora')
 var webpack = require('webpack')
 var webpackConfig = require('./webpack.prod.conf')
