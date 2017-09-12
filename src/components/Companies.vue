@@ -7,7 +7,7 @@
     </b-alert>
 
     <div class="my-1 row justify-content-md-center">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <b-form-input
           v-model="filter"
           placeholder="Type to Search"
@@ -15,7 +15,7 @@
           lazy-formatter
         />
       </div>
-      <div class="col-md-5">
+      <div class="col-md-4 offset-md-2">
         <b-button-group>
           <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
           <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
@@ -49,9 +49,9 @@
         <b-btn size="sm" @click.stop="toggleServiceWork()">Ремонт</b-btn>
       </template>
     </b-table>
-    <div>
-      {{prepareDeployConsole}}
-    </div>
+
+    <terminal v-bind:msg="['asdf', 'asdfasdf', 'adsfasdf']"></terminal>
+
     <b-modal close-title="Cancel" id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
       Realy delete {{companyEditor.item ? companyEditor.item.company_name : ''}}?
     </b-modal>
@@ -62,6 +62,9 @@
 <script>
 import Vue from 'vue'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import Terminal from './Terminal'
+
+Vue.component('terminal', Terminal)
 
 export default {
   name: 'main',
@@ -115,7 +118,7 @@ export default {
       this.socket.emit("deleteCompany", id);
     },
     prepareDeploy : function(){
-      app.blockDeployBut = true;
+      this.blockDeployBut = true;
       this.socket.emit("prepareDeploy");
     },
     toggleServiceWork : function(){
@@ -165,7 +168,7 @@ export default {
           break;
         case "prepareDeploy":
           this.showAlertMsg('Деплой готов!')
-          // this.blockDeployBut = false;
+          this.blockDeployBut = false;
           break;
         case "updateClient":
           this.showAlertMsg(`Компания ${this.companies[index] ? this.companies[index].company_name : ''} обновлена!`)
