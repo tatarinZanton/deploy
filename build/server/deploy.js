@@ -1,5 +1,5 @@
 function run(socket){
-
+var config = process.env.NODE_ENV === 'production' ? require('../../config').build.env : require('../../config').dev.env;
 var nrc = require('node-run-cmd'),
 commands = [
   'git reset --hard',
@@ -14,7 +14,7 @@ commands = [
   'git commit -m "Updaiting test '+new Date()+'"',
   'git push --force origin deploy'
 ],
-options = { cwd: '/var/www/billing-system',
+options = { cwd: config.pathToProg,
             onData: function(data){
               socket.emit("prepareDeployConsole", data);
 

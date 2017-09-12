@@ -50,7 +50,7 @@
       </template>
     </b-table>
 
-    <terminal v-bind:msg="['asdf', 'asdfasdf', 'adsfasdf']"></terminal>
+    <terminal v-bind:msg="prepareDeployConsole"></terminal>
 
     <b-modal close-title="Cancel" id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
       Realy delete {{companyEditor.item ? companyEditor.item.company_name : ''}}?

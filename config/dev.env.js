@@ -6,5 +6,6 @@ module.exports = merge(prodEnv, {
   dbUser  : '"root"',
   dbPasswd : '"adm/leg87"',
   dbName   : '"billing"',
-  NODE_ENV: '"development"'
+  NODE_ENV: '"development"',
+  pathToProg : '"/var/www/billing-system"'
 })

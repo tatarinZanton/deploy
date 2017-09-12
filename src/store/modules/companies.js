@@ -3,7 +3,7 @@ import * as constants from '../mutations'
 
 const state = {
   list: [],
-  consoleFull: "",
+  consoleFull: [],
 }
 
 const mutations = {
@@ -28,7 +28,7 @@ const mutations = {
     })
   },
   [constants.ADD_PREPARE_DEPLOY_CONSOLE] (state, { data }) {
-    state.consoleFull += data
+    state.consoleFull = state.consoleFull.concat([data])
   },
 }
 
