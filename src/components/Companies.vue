@@ -45,7 +45,8 @@
         <router-link :to="{ path: `company/${row.item.id}` }">
           <b-btn size="sm">Редактировать</b-btn>
         </router-link>
-        <b-btn size="sm" @click.stop="updateClient(row.company, row.index)">Обновить контейнер</b-btn>
+        <b-btn size="sm" @click.stop="updateClient(row.item, row.index)">Обновить контейнер</b-btn>
+        <b-btn size="sm" @click.stop="toggleServiceWork()">Ремонт</b-btn>
       </template>
     </b-table>
     <div>
@@ -117,8 +118,11 @@ export default {
       app.blockDeployBut = true;
       this.socket.emit("prepareDeploy");
     },
+    toggleServiceWork : function(){
+      this.socket.emit("prepareDeploy");
+    },
     updateClient:function(company, index){
-      app.companies[index].companyUpBut = true;
+      this.companies[index].companyUpBut = true;
       this.socket.emit("updateClient",  company, index);
     },
     updateAll:function() {
