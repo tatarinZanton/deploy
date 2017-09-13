@@ -1,16 +1,6 @@
 <template>
   <div class="edit-company">
     <h1>{{ company.company_name }}</h1>
-    <!-- <form class="companyForm" id="addCompany" method="post" v-on:submit="addCompany" >
-      Компания:<input type="text" name="companyName" v-model="newCompany.company_name">
-      IP:<input type="text" name="companyIP" v-model="newCompany.ip_address">
-      Порт:<input type="text" name="companyPort" v-model="newCompany.port">
-      HostName <input type="text" name="hostname" v-model="newCompany.hostname">
-      Оплата:<input type="checkbox" name="payment" v-model="newCompany.payed">
-      Ключ TLS:<input type="text" name="tlsKey" v-model="newCompany.tls_key">
-      <input type="submit" name="addCompany">
-    </form> -->
-
     <div class="my-1 row justify-content-md-center">
       <div class="col-md-4">
         <b-alert variant="success" :show="showAlert">
@@ -50,6 +40,8 @@
             <div class="text-left">
               <b-form-checkbox
                 id="checkbox1"
+                v-bind:value="1"
+                v-bind:unchecked-value="0"
                 v-model="company.payed"
               >
               </b-form-checkbox>

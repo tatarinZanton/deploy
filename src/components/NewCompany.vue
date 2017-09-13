@@ -42,6 +42,8 @@
             <div class="text-left">
               <b-form-checkbox
                 id="checkbox1"
+                v-bind:value="1"
+                v-bind:unchecked-value="0"
                 v-model="company.payed"
               >
               </b-form-checkbox>
@@ -77,7 +79,6 @@ export default {
   },
   methods: {
     addCompany: function(){
-      console.log(this.company);
       this.socket.emit('addCompany', this.company);
     },
   },
