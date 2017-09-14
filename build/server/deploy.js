@@ -14,13 +14,15 @@ commands = [
   'git commit -m "Updaiting test '+new Date()+'"',
   'git push --force origin deploy'
 ],
-options = { cwd: config.pathToProg,
+options = { cwd: config.pathToProg.replace (/"/g, ""),
             onData: function(data){
+              // console.log(config.pathToProg);
               socket.emit("prepareDeployConsole", data);
-
+              console.log(data);
             },
             onError: function(err){
               socket.emit("prepareDeployConsole", err);
+              console.log(err);
             },
             // onDone: function(data){
             //   socket.emit("prepareDeployConsole", data);

@@ -62,7 +62,7 @@ Db.prototype.deleteCompany = function(callback, id){
   var sql = `INSERT INTO companies_archive (id, ip_address, port, company_name, payed, hostname, tls_key)
              SELECT * FROM companies WHERE id = ${id};
              DELETE FROM companies WHERE id = ${id};`;
-
+          
   this.connection.query(sql, function (err, result) {
     if (err) throw err;
     callback(null, result);

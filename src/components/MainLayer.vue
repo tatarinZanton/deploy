@@ -9,7 +9,9 @@
             <b-nav is-nav-bar>
               <b-nav-item href="#/companies">Companies</b-nav-item>
               <b-nav-item href="#">Logs</b-nav-item>
+              <b-nav-item href="#/versions">Версии</b-nav-item>
             </b-nav>
+
 
             <!-- Right aligned nav items -->
             <!-- <b-nav is-nav-bar class="ml-auto">

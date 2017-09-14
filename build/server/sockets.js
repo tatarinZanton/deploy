@@ -78,6 +78,15 @@ socket.on("getCommits", function(company, index){
    socketsTls[company.id].write("getCommits");
 });
 
+socket.on("getVersionsList",function(){
+  socket.emit("versionsList", [
+                              {id:12,
+                                commits:'vfdsfdfs',
+                                commitsName:'dsfdsfdsf',
+                                tags:'0.0.0'
+                              }]);
+});
+
 
 }
 module.exports = run;
