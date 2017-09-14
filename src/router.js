@@ -4,8 +4,12 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/',
-    redirect: { path: '/companies' },
+  {
+    path: '*',
+    component: resolve => require(['./components/NotFound'], resolve)
+  },
+  {
+    path: '/', redirect: { path: '/companies' },
     component: resolve => require(['./components/MainLayer'], resolve),
     children: [
       {
@@ -24,22 +28,17 @@ const routes = [
         path: 'versions',
         component: resolve => require(['./components/versions/Versions'], resolve),
         children: [
-        {
-          path: 'list',
-          component: resolve => require(['./components/versions/VersionsList'], resolve),
-        },
-        {
-          path: 'listdb',
-          component: resolve => require(['./components/versions/VersionsListDb'], resolve),
-        }
-      ]
-      },
-      {
-        path: '*',
-        component: resolve => require(['./components/NotFound'], resolve)
+          {
+            path: 'list',
+            component: resolve => require(['./components/versions/VersionsList'], resolve),
+          },
+          {
+            path: 'listdb',
+            component: resolve => require(['./components/versions/VersionsListDb'], resolve),
+          }
+        ]
       },
     ]
-
   },
 ]
 
