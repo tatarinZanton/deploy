@@ -2,7 +2,7 @@
   <div class="main">
 
 
-    <b-alert variant="success" :show="showAlert.show">
+    <b-alert variant="success" :show="showAlert.show" class="event-alerts">
         {{showAlert.msg}}
     </b-alert>
 
@@ -201,5 +201,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .event-alerts {
+    text-align: center;
+  }
 </style>
