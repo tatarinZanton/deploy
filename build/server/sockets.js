@@ -84,16 +84,15 @@ socket.on("getVersionsList",function(){
 
 });
 
-// socket.on("getVersionsDb",function(){
+socket.on("getVersionsDb",function(){
   async.series([
     function(callback) {
       db.getVersions(callback);
   }],
   function(err, results) {
-      console.log(results[0]);
-      // socket.emit("versionsDb",results[0]);
+      socket.emit("versionsDb",results[0]);
   });
-// });
+});
 
 
 }

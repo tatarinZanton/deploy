@@ -17,12 +17,12 @@ const mutations = {
 }
 
 const actions = {
-  setVervionsList({commit}, data) {
+  setVersionsList({commit}, data) {
     commit(constants.VERSIONS_LIST, {
       data
     })
   },
-  setVervionsDb({commit}, data) {
+  setVersionsDb({commit}, data) {
     commit(constants.VERSIONS_DB, {
       data
     })
@@ -31,7 +31,15 @@ const actions = {
 
 const getters = {
   versionsList: state => state.versionsList,
-  versionsDb: state => state.versionsDb,
+  versionsDb: state => state.versionsDb.map(s => ({...s, unixTime: new Date(s.unixTime*1000).toLocaleDateString('ru-RU',
+            {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            }
+          )})),
 }
 
 export default {

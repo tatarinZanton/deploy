@@ -11,11 +11,13 @@
       <template slot="hash" scope="row">{{row.value}}</template>
       <template slot="name" scope="row">{{row.value}}</template>
       <template slot="version" scope="row">{{row.value}}</template>
-      <template slot="edit" scope="row">
+      <template slot="actions" scope="row">
+
         <router-link :to="{ path: `/versions/list/${row.item.hash}` }">
           <b-btn size="sm">Редактировать</b-btn>
         </router-link>
       </template>
+
 
 
     </b-table>
@@ -33,6 +35,7 @@ export default {
         hash: { label: 'Hash', sortable: true },
         name: { label: 'Название', sortable: true, 'class': 'text-center'  },
         version: { label: 'Версия', sortable: true },
+        actions:  { label: 'Управление' },
       },
     }
   },
@@ -45,8 +48,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'setVervionsList',
-      'setVervionsDb'
+      'setVersionsList',
+      'setVersionsDb'
     ]),
 
 
@@ -60,7 +63,7 @@ export default {
       this.socket.emit("getVersionsList")
     }
     this.socket.on('versionsList', (data) => {
-      this.setVervionsList(data);
+      this.setVersionsList(data);
     })
   }
 }
