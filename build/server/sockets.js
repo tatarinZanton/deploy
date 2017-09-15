@@ -3,7 +3,7 @@ function run(db, async, socket){
 var connection = require('./connection'),
     deploy = require("./deploy"),
     socketsTls = {},
-    versionsList = require("./versions/versionsList.js");
+    versionsList = require("./versionsList");
 // Получаем список компаний и устанавливаем соединение с клиентами
 socket.on("getCompanies", function(){
   async.series([
@@ -81,13 +81,19 @@ socket.on("getCommits", function(company, index){
 
 socket.on("getVersionsList",function(){
   versionsList(socket);
-  socket.emit("versionsList", [
-                              {id:12,
-                                commits:'vfdsfdfs',
-                                commitsName:'dsfdsfdsf',
-                                tags:'0.0.0'
-                              }]);
+
 });
+
+// socket.on("getVersionsDb",function(){
+  async.series([
+    function(callback) {
+      db.getVersions(callback);
+  }],
+  function(err, results) {
+      console.log(results[0]);
+      // socket.emit("versionsDb",results[0]);
+  });
+// });
 
 
 }

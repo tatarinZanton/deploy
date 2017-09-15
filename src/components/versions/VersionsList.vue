@@ -8,12 +8,11 @@
       :items="versionsList"
       :fields="fields"
     >
-      <template slot="id" scope="row">{{row.value}}</template>
-      <template slot="commits" scope="row">{{row.value}}</template>
-      <template slot="commitsName" scope="row">{{row.value}}</template>
-      <template slot="tags" scope="row">{{row.value}}</template>
+      <template slot="hash" scope="row">{{row.value}}</template>
+      <template slot="name" scope="row">{{row.value}}</template>
+      <template slot="version" scope="row">{{row.value}}</template>
       <template slot="edit" scope="row">
-        <router-link :to="{ path: `/versions/list/${row.item.id}` }">
+        <router-link :to="{ path: `/versions/list/${row.item.hash}` }">
           <b-btn size="sm">Редактировать</b-btn>
         </router-link>
       </template>
@@ -31,10 +30,9 @@ export default {
   data () {
     return {
       fields: {
-        id: { label: 'ID', sortable: true },
-        commits: { label: 'Commit ID', sortable: true, 'class': 'text-center'  },
-        commitsName: { label: 'Commit Name', sortable: true },
-        tags: { label: 'Версия', sortable: true },
+        hash: { label: 'Hash', sortable: true },
+        name: { label: 'Название', sortable: true, 'class': 'text-center'  },
+        version: { label: 'Версия', sortable: true },
       },
     }
   },

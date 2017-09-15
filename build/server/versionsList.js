@@ -1,5 +1,5 @@
 function run(socket){
-  var config = process.env.NODE_ENV === 'production' ? require('../../../config').build.env : require('../../../config').dev.env;
+  var config = process.env.NODE_ENV === 'production' ? require('../../config').build.env : require('../../config').dev.env;
   var versionsData, result, error,
   nrc = require('node-run-cmd'),
   commands = [
@@ -41,8 +41,8 @@ function run(socket){
                         version : (typeof tag === "string") ? tag : ""
                       });
       });
-
-      console.log(versions);
+        socket.emit("versionsList",versions);
+      // console.log(versions);
       // socket.emit("versionsList", versions);
   });
 
