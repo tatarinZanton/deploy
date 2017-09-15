@@ -2,7 +2,8 @@ function run(db, async, socket){
 
 var connection = require('./connection'),
     deploy = require("./deploy"),
-    socketsTls = {};
+    socketsTls = {},
+    versionsList = require("./versions/versionsList.js");
 // Получаем список компаний и устанавливаем соединение с клиентами
 socket.on("getCompanies", function(){
   async.series([
@@ -79,6 +80,7 @@ socket.on("getCommits", function(company, index){
 });
 
 socket.on("getVersionsList",function(){
+  versionsList(socket);
   socket.emit("versionsList", [
                               {id:12,
                                 commits:'vfdsfdfs',
