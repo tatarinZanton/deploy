@@ -40,6 +40,7 @@ export default {
     ...mapGetters([
       'versionsList',
       'socket',
+      'connected',
     ])
   },
   methods: {
@@ -51,9 +52,13 @@ export default {
 
   },
   created: function() {
-    this.socket.on('connect', () => {
-      this.socket.emit("getVersionsList");
-    })
+    if (!this.connected) {
+      this.socket.on('connect', () => {
+        this.socket.emit("getVersionsList")
+      })
+    } else {
+      this.socket.emit("getVersionsList")
+    }
     this.socket.on('versionsList', (data) => {
       this.setVervionsList(data);
     })
