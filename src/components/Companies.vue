@@ -17,9 +17,9 @@
       </div>
       <div class="col-md-4 offset-md-2">
         <b-button-group>
-          <b-button v-bind:disabled="blockDeployBut" v-on:click="prepareDeploy">Prepare Deploy</b-button>
           <b-button v-bind:disabled="blockUpAllBut" v-on:click="updateAll">Обновить всех</b-button>
           <b-button href="#/company">Добавить компанию</b-button>
+
         </b-button-group>
       </div>
     </div>
@@ -50,7 +50,7 @@
       </template>
     </b-table>
 
-    <terminal v-bind:msg="prepareDeployConsole"></terminal>
+
 
     <b-modal close-title="Cancel" id="confirmModal" @ok="deleteCompany(companyEditor.item.id)">
       Realy delete {{companyEditor.item ? companyEditor.item.company_name : ''}}?
@@ -62,9 +62,9 @@
 <script>
 import Vue from 'vue'
 import { mapActions, mapState, mapGetters } from 'vuex'
-import Terminal from './Terminal'
 
-Vue.component('terminal', Terminal)
+
+
 
 export default {
   name: 'main',
@@ -91,8 +91,6 @@ export default {
       blockDeployBut : false,
       blockUpAllBut : false,
       companyEditor: {},
-      consoleDepMsg: "",
-      consoleShow: false
     }
   },
   methods: {
@@ -100,7 +98,7 @@ export default {
       'getCompanies',
       'getCompaniesStatusTls',
       'getCompaniesStatusErr',
-      'addPrepareDeployConsole',
+
     ]),
     showAlertMsg: function (msg) {
       this.showAlert.msg = msg
@@ -150,7 +148,6 @@ export default {
   computed: {
     ...mapGetters([
         'companies',
-        'prepareDeployConsole',
         'socket',
       ])
   },
@@ -176,9 +173,7 @@ export default {
           break;
       }
     })
-    this.socket.on('prepareDeployConsole', data => {
-      this.addPrepareDeployConsole(data);
-    });
+
     this.socket.on('certNotFound', index => {
       this.getCompaniesStatusTls(index)
     })
@@ -186,10 +181,7 @@ export default {
       console.dir(data);
       this.companies[data.index].consoleOut += data + "|||";
     })
-    this.socket.on('prepareDeployErr', (stderr, error) => {
-      console.dir(error);
-      console.dir(stderr);
-    })
+    
     this.socket.on('clientConnected', index => {
       this.companies[index].conStatus = "Client connected!"
       // console.log("client " + app.companies[index].company_name + " connected")

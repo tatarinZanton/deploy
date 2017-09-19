@@ -1,7 +1,7 @@
 function run(db, async, socket){
 
 var connection = require('./connection'),
-    deploy = require("./deploy"),
+    deploy = require("./deploy")(socket, db, async), // подключаем модуль deploy
     socketsTls = {},
     versionsList = require("./versionsList");
 // Получаем список компаний и устанавливаем соединение с клиентами
@@ -63,10 +63,7 @@ socket.on('editCompany', function(data){
   });
 })
 
-// Подготовка к обновлению
-socket.on("prepareDeploy",function(){
-  deploy(socket);
-});
+
 
 
 // Обновление компании по индексу

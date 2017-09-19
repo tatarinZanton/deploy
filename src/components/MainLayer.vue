@@ -10,6 +10,8 @@
               <b-nav-item href="#/companies">Companies</b-nav-item>
               <b-nav-item href="#">Logs</b-nav-item>
               <b-nav-item href="#/versions">Версии</b-nav-item>
+              <b-nav-item href="#/deployment">Deployment</b-nav-item>
+
             </b-nav>
 
 

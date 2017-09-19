@@ -17,6 +17,24 @@ const routes = [
         component: resolve => require(['./components/Companies'], resolve)
       },
       {
+        path: 'deployment',
+        component: resolve => require(['./components/deployment/Deployment'], resolve),
+        children: [
+          {
+            path: 'branches',
+            component: resolve => require(['./components/deployment/DeploymentBranches'], resolve),
+          },
+          {
+            path: 'deploy-list',
+            component: resolve => require(['./components/deployment/DeploymentList'], resolve),
+          },
+          {
+            path: 'make-deploy/:branch',
+            component: resolve => require(['./components/deployment/MakeDeployement'], resolve)
+          },
+        ]
+      },
+      {
         path: 'company/:id',
         component: resolve => require(['./components/EditCompany'], resolve)
       },
@@ -31,6 +49,10 @@ const routes = [
           {
             path: 'list',
             component: resolve => require(['./components/versions/VersionsList'], resolve),
+          },
+          {
+            path: 'list/:hash',
+            component: resolve => require(['./components/versions/EditVersionsList'], resolve)
           },
           {
             path: 'listdb',

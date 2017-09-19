@@ -8,13 +8,14 @@
       :items="versionsList"
       :fields="fields"
     >
-      <template slot="hash" scope="row">{{row.value}}</template>
+      <template slot="shortHash" scope="row">{{row.value}}</template>
       <template slot="name" scope="row">{{row.value}}</template>
+      <template slot="unixTime" scope="row">{{row.value}}</template>
       <template slot="version" scope="row">{{row.value}}</template>
       <template slot="actions" scope="row">
 
-        <router-link :to="{ path: `/versions/list/${row.item.hash}` }">
-          <b-btn size="sm">Редактировать</b-btn>
+        <router-link :to="{ path: `/versions/list/${row.item.hash}` }" v-if="!row.item.version">
+          <b-btn size="sm">Создать версию</b-btn>
         </router-link>
       </template>
 
@@ -32,8 +33,9 @@ export default {
   data () {
     return {
       fields: {
-        hash: { label: 'Hash', sortable: true },
-        name: { label: 'Название', sortable: true, 'class': 'text-center'  },
+        shortHash:{ label: 'Hash', sortable: true },
+        name: { label: 'Имя коммита', sortable: true, 'class': 'text-center'  },
+        unixTime :{ label: 'Время создания коммита', sortable: true },
         version: { label: 'Версия', sortable: true },
         actions:  { label: 'Управление' },
       },
@@ -49,7 +51,6 @@ export default {
   methods: {
     ...mapActions([
       'setVersionsList',
-      'setVersionsDb'
     ]),
 
 
@@ -63,6 +64,7 @@ export default {
       this.socket.emit("getVersionsList")
     }
     this.socket.on('versionsList', (data) => {
+      console.log(this.methods);
       this.setVersionsList(data);
     })
   }

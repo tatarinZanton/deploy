@@ -2,8 +2,7 @@ import Vue from 'vue'
 import * as constants from '../mutations'
 
 const state = {
-  list: [],
-  consoleFull: [],
+  list: []
 }
 
 const mutations = {
@@ -27,9 +26,7 @@ const mutations = {
       return c
     })
   },
-  [constants.ADD_PREPARE_DEPLOY_CONSOLE] (state, { data }) {
-    state.consoleFull = state.consoleFull.concat([data])
-  },
+
 }
 
 const actions = {
@@ -50,11 +47,7 @@ const actions = {
       err
     })
   },
-  addPrepareDeployConsole({commit}, data){
-    commit(constants.ADD_PREPARE_DEPLOY_CONSOLE, {
-      data
-    })
-  }
+
 }
 
 const getters = {
@@ -63,7 +56,6 @@ const getters = {
     const comp = getters.companies.filter(f => (String(id) === String(f.id)))
     return comp.length ? comp[0] : {}
   },
-  prepareDeployConsole: state => state.consoleFull,
 }
 
 export default {

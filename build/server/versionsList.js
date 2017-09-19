@@ -3,7 +3,7 @@ function run(socket){
   var versionsData="", result, error,
   nrc = require('node-run-cmd'),
   commands = [
-    "git log --pretty=format:'%H|%D|%s' -5"
+    "git log --pretty=format:'%H|%at|%D|%s' -5"
   ],
   options = { cwd: config.pathToProg.replace (/"/g, ""),
               onData: function(data){
@@ -27,18 +27,21 @@ function run(socket){
       var tag;
       el = el.replace (/'/g, "");
       tag = el.split(/tag/);
+
       if (tag[1]) {
        tag = tag[1].split("|")[0].match(/\d{1,2}\.\d{1,2}\.\d{1,2}\.\d{1,3}/)[0];
       }
 
       tmp = el.split("|");
-
+      // console.log(tmp);
       versions.push({
                       hash: tmp[0],
+                      unixTime: tmp[1],
                       name: tmp[tmp.length - 1],
                       version : (typeof tag === "string") ? tag : ""
                     });
     });
+    // console.log(versions);
     socket.emit("versionsList",versions);
   });
 
