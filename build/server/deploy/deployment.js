@@ -4,16 +4,16 @@ module.exports = {
     let creationTime = new Date(),
     commands = [
       'git reset --hard',
-      // 'git clean -f -d',
-      // `git checkout ${referenceBranch}`,
-      // `git branch -D ${deployBranch}`,
-      // `git pull origin ${referenceBranch}`,
-      // `git checkout -b ${deployBranch}`,
-      // {command: 'node_modules/.bin/gulp deploy',cwd:`${pathToProg}/app-advanced`},
-      // {command: 'node_modules/.bin/gulp clean-deploy',cwd:`${pathToProg}/app-advanced`},
-      // 'git add --all',
-      // `git commit -m "Updaiting ${creationTime}"`,
-      // `git push --force origin ${deployBranch}`
+      'git clean -f -d',
+      `git checkout ${referenceBranch}`,
+      `git branch -D ${deployBranch}`,
+      `git pull origin ${referenceBranch}`,
+      `git checkout -b ${deployBranch}`,
+      {command: 'node_modules/.bin/gulp deploy',cwd:`${pathToProg}/app-advanced`},
+      {command: 'node_modules/.bin/gulp clean-deploy',cwd:`${pathToProg}/app-advanced`},
+      'git add --all',
+      `git commit -m "Updaiting ${creationTime}"`,
+      `git push --force origin ${deployBranch}`
     ],
     options = { cwd: pathToProg,
                 onData: function(data){
@@ -34,7 +34,7 @@ module.exports = {
     nrc.run(commands, options).then(e=>{
       async.series([
        function(callback) {
-         
+
             db.createDeploy(callback, deployBranch, referenceBranch, creationTime);
       }],
       function(err, results) {

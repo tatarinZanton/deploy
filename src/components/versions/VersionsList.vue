@@ -64,7 +64,6 @@ export default {
       this.socket.emit("getVersionsList")
     }
     this.socket.on('versionsList', (data) => {
-      console.log(this.methods);
       this.setVersionsList(data);
     })
   }

@@ -14,7 +14,7 @@ const routes = [
     children: [
       {
         path: 'companies',
-        component: resolve => require(['./components/Companies'], resolve)
+        component: resolve => require(['./components/companies/Companies'], resolve)
       },
       {
         path: 'deployment',
@@ -36,11 +36,11 @@ const routes = [
       },
       {
         path: 'company/:id',
-        component: resolve => require(['./components/EditCompany'], resolve)
+        component: resolve => require(['./components/companies/EditCompany'], resolve)
       },
       {
         path: 'company',
-        component: resolve => require(['./components/NewCompany'], resolve)
+        component: resolve => require(['./components/companies/NewCompany'], resolve)
       },
       {
         path: 'versions',

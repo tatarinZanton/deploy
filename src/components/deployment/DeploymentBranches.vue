@@ -9,7 +9,6 @@
       :fields="fields"
     >
       <template slot="name" scope="row">{{row.value}}</template>
-      <template slot="lastCommit" scope="row">{{row.value}}</template>
       <template slot="commitTime" scope="row">{{row.value}}</template>
       <template slot="actions" scope="row">
 
@@ -59,7 +58,7 @@
         ;
         })
       } else {
-        
+
         this.socket.emit("getDeploymentBranches")
       }
 
