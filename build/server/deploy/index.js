@@ -9,8 +9,18 @@ function run(socket, db, async){
     branches.getRemoteBranchesForDeployment(nrc, socket, config.pathToProg);
   });
 
-  socket.on("makeDeployement", function(deployBranch, referenceBranch){
+  socket.on("makeDeployment", function(deployBranch, referenceBranch){
     deployment.prepareDeploy(nrc, socket, config.pathToProg, db, async, deployBranch, referenceBranch);
   });
+
+  socket.on("getDeploymentList",function(){
+    deployment.getDeploymentList(nrc, socket, config.pathToProg, db, async);
+  });
+
+  socket.on("delDeploymentList",function(id){
+    deployment.delDeploymentList(socket, db, async, id);
+  });
+
+
 }
 module.exports = run;

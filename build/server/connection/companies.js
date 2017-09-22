@@ -7,9 +7,9 @@ const hostname = company.hostname;
 const tls = require('tls');
 var fs = require('fs');
 
-var keyFileStr = __dirname + '/certs/'+company.tls_key+'/client.key',
-    crtFileStr = __dirname + '/certs/'+company.tls_key+'/client.crt',
-    caFileStr  = __dirname + '/certs/'+company.tls_key+'/ca.crt';
+var keyFileStr = __dirname + '/../certs/'+company.tls_key+'/client.key',
+    crtFileStr = __dirname + '/../certs/'+company.tls_key+'/client.crt',
+    caFileStr  = __dirname + '/../certs/'+company.tls_key+'/ca.crt';
 
 // Проверка существования сертификатов
 if (!fs.existsSync(keyFileStr) || !fs.existsSync(crtFileStr) || !fs.existsSync(caFileStr)) {

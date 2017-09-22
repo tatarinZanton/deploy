@@ -50,7 +50,7 @@ export default {
     ]),
     makeDeployement: function(deployBranch, referenceBranch) {
       this.consoleShow = true;
-      this.socket.emit("makeDeployement", this.deployPrefix+deployBranch, referenceBranch);
+      this.socket.emit("makeDeployment", this.deployPrefix+deployBranch, referenceBranch);
     },
     format(value, el) {
       return String(value)

@@ -1,5 +1,5 @@
 module.exports = {
-  prepareDeploy: function run(nrc, socket, pathToProg, db, async, deployBranch, referenceBranch){
+  prepareDeploy: function (nrc, socket, pathToProg, db, async, deployBranch, referenceBranch){
     console.log(deployBranch, referenceBranch);
     let creationTime = new Date(),
     commands = [
@@ -46,5 +46,36 @@ module.exports = {
       });
 
     });
+  },
+
+
+  getDeploymentList: function(nrc, socket, pathToProg, db, async){
+
+    async.series([
+     function(callback) {
+          db.getDeployList(callback);
+    }],
+    function(err, results) {
+       if(err){
+         socket.emit("error", err);
+         throw err;
+     };
+      socket.emit("deploymentList", results[0]);
+    });
+  },
+
+  delDeploymentList: function(socket, db, async, id){
+    async.series([
+     function(callback) {
+          db.delDeployList(callback, id);
+    }],
+    function(err, results) {
+       if(err){
+         socket.emit("error", err);
+         throw err;
+     };
+      socket.emit("delDeploymentList");
+    });
   }
+
 }

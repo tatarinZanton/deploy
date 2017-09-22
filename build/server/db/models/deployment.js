@@ -9,4 +9,23 @@ module.exports = function(Db){
       callback(null, result);
     });
   }
+
+  Db.prototype.getDeployList = function(callback){
+    var sql = `SELECT * FROM deploy;`;
+
+    this.connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(null, result);
+    });
+  }
+
+  Db.prototype.delDeployList = function(callback, id){
+    var sql = `DELETE FROM deploy WHERE id = ${id};`;
+
+    this.connection.query(sql, function (err, result) {
+      if (err) throw err;
+      callback(null, result);
+    });
+  }
+
 }

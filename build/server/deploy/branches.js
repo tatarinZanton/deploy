@@ -18,7 +18,9 @@ module.exports = {
      outputRemoteData = outputRemoteData.split("\n").splice(1);
      outputRemoteData.pop();
      outputRemoteData.forEach(function(el){
+      if(el.split("deploy_").length != 2){
        arrOfRemoteBranches.push({name:el.split("/")[1]});
+      };
      })
       socket.emit("deploymentBranches", arrOfRemoteBranches);
    })
