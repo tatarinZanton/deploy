@@ -1,6 +1,6 @@
 module.exports = {
   prepareDeploy: function (nrc, socket, pathToProg, db, async, deployBranch, referenceBranch){
-    console.log(deployBranch, referenceBranch);
+
     let creationTime = new Date(),
     commands = [
       'git reset --hard',
@@ -49,13 +49,27 @@ module.exports = {
   },
 
 
-  getDeploymentList: function(nrc, socket, pathToProg, db, async){
+  getDeploymentList: function(nrc, socket, db, pathToProg, async, branches){
 
-    async.series([
+    async.parallel([
      function(callback) {
           db.getDeployList(callback);
-    }],
+     },
+     function(callback) {
+       branches.getRemoteBranchesForDeployment(nrc, socket, pathToProg,  callback);
+     },
+    ],
     function(err, results) {
+      let remoteBranches = {},
+          sourceBranches = results[1],
+          deployList = JSON.parse(JSON.stringify(results[0]));
+        sourceBranches.forEach(function(el){
+          remoteBranches[el.name] = true;
+        });
+        deployList.forEach(function(el){
+          el.remoteBranch = (remoteBranches[el.referenceBranch]) ? true : false ;
+        })
+        console.log(deployList);
        if(err){
          socket.emit("error", err);
          throw err;

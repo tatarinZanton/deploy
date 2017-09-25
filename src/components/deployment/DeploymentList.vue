@@ -45,7 +45,7 @@
         fields: {
           name:{ label: 'Название', sortable: true },
           referenceBranch:{ label: 'Опорная ветка', sortable: true },
-          createTime:{ label: 'Время создания', sortable: true },
+          creationTime:{ label: 'Время создания', sortable: true },
           actions:  { label: 'Управление' },
         },
         deploymentListEditor:{}

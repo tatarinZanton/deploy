@@ -1,7 +1,18 @@
 <template>
   <div>
-    <b-btn v-b-toggle.terminal variant="outline-secondary" size="sm" class="terminal-button">terminal</b-btn>
-    <b-collapse id="terminal">
+    <!-- v-b-toggle.terminal variant="outline-secondary" -->
+    <b-btn variant="outline-secondary" size="sm" class="terminal-button"
+              @click="showTerminal = !showTerminal"
+               :class="showTerminal ? 'collapsed' : null"
+               aria-controls="terminal"
+               :aria-expanded="showTerminal ? 'true' : 'false'">
+               terminal
+    </b-btn>
+
+
+
+
+    <b-collapse id="terminal" v-model="showTerminal">
       <b-card>
         <div class="shell-wrap">
           <p class="shell-top-bar" v-once>{{ serverTerminal }}</p>
@@ -26,12 +37,16 @@ export default {
   data () {
     return {
       serverTerminal: server,
+      showTerminal:false
     }
   },
   methods: {
     ...mapActions([
     ]),
-
+    scrollToEnd: function() {
+      let container = this.$el.querySelector(".shell-body");
+      container.scrollTop = container.scrollHeight;
+    },
   },
   computed: {
     ...mapGetters([

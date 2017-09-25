@@ -81,12 +81,22 @@ const actions = {
 const getters = {
   deploymentBranches: state => state.deploymentBranches,
   deploymentBranch: (state, getters) => (branch) => {
-    console.log(branch);
     const comp = getters.deploymentBranches.filter(f => (String(branch) === String(f.name)))
-    console.log(comp);
     return comp.length ? comp[0] : {}
   },
-  deploymentList: state => state.deploymentList,
+  deploymentList: state => state.deploymentList.map(s => ({...s,
+    creationTime: new Date(s.creationTime*1000).toLocaleDateString('ru-RU',
+            {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric'
+            }
+          )
+    }),
+
+  ),
   prepareDeployConsole: state => state.consoleFull,
   testingContainer: state => state.testingContainer,
 }

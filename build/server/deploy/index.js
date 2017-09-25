@@ -6,7 +6,9 @@ function run(socket, db, async){
   const nrc = require('node-run-cmd');
 
   socket.on("getDeploymentBranches",function(){
-    branches.getRemoteBranchesForDeployment(nrc, socket, config.pathToProg);
+    branches.getRemoteBranchesForDeployment(nrc, socket, config.pathToProg, function(foo, arrOfRemoteBranches){
+      socket.emit("deploymentBranches", arrOfRemoteBranches);
+    });
   });
 
   socket.on("makeDeployment", function(deployBranch, referenceBranch){
@@ -14,7 +16,8 @@ function run(socket, db, async){
   });
 
   socket.on("getDeploymentList",function(){
-    deployment.getDeploymentList(nrc, socket, config.pathToProg, db, async);
+
+    deployment.getDeploymentList(nrc, socket, db, config.pathToProg, async, branches);
   });
 
   socket.on("delDeploymentList",function(id){

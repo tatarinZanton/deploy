@@ -33,14 +33,14 @@ import Terminal from '../Terminal'
 Vue.component('terminal', Terminal)
 
 export default {
-  name: 'editCompany',
+  name: 'makeDeploy',
   data () {
     return {
       showAlert: false,
       deployName: "",
       deployPrefix:"deploy_",
       consoleDepMsg: "",
-      consoleShow: false,
+
     }
   },
   methods: {
@@ -49,7 +49,8 @@ export default {
       'addPrepareDeployConsole',
     ]),
     makeDeployement: function(deployBranch, referenceBranch) {
-      this.consoleShow = true;
+      this.$children[2].showTerminal = true;
+      // console.log(this.$children[2]);
       this.socket.emit("makeDeployment", this.deployPrefix+deployBranch, referenceBranch);
     },
     format(value, el) {
@@ -83,6 +84,7 @@ export default {
     })
 
     this.socket.on('prepareDeployConsole', data => {
+      this.$children[2].scrollToEnd();
       this.addPrepareDeployConsole(data);
     });
     this.socket.on('prepareDeploySuccess', data => {

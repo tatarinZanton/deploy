@@ -1,5 +1,5 @@
 module.exports = {
-  getRemoteBranchesForDeployment: function (nrc, socket, pathToProg){
+  getRemoteBranchesForDeployment: function (nrc, socket, pathToProg, callback){
     let outputRemoteData = "";
    nrc.commands = [
      'git branch -r',
@@ -22,7 +22,8 @@ module.exports = {
        arrOfRemoteBranches.push({name:el.split("/")[1]});
       };
      })
-      socket.emit("deploymentBranches", arrOfRemoteBranches);
+     callback(null, arrOfRemoteBranches);
+
    })
  }
 
