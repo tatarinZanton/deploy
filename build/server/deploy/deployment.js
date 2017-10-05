@@ -69,7 +69,7 @@ module.exports = {
         deployList.forEach(function(el){
           el.remoteBranch = (remoteBranches[el.referenceBranch]) ? true : false ;
         })
-        console.log(deployList);
+
        if(err){
          socket.emit("error", err);
          throw err;

@@ -1,12 +1,23 @@
 <template>
   <div class="main">
     <h1>Ветки</h1>
+    <div class="my-1 row justify-content-md-center">
+      <div class="col-md-4">
+        <b-form-input
+          v-model="filter"
+          placeholder="Type to Search"
+          :formatter="format"
+          lazy-formatter
+        />
+      </div>
+    </div>
     <b-table
       striped
       hover
       show-empty
       :items="deploymentBranches"
       :fields="fields"
+      :filter="filter"
     >
       <template slot="name" scope="row">{{row.value}}</template>
       <template slot="commitTime" scope="row">{{row.value}}</template>
@@ -32,6 +43,7 @@
           name:{ label: 'Название', sortable: true },
           actions:  { label: 'Управление' },
         },
+        filter:null
       }
     },
 

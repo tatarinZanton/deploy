@@ -23,23 +23,14 @@ const options = {
   host: hostname,
   port: port,
 
-  // Necessary only if using the client certificate authentication
   key: fs.readFileSync(keyFileStr),
   cert: fs.readFileSync(crtFileStr),
-
-  // Necessary only if the server uses the self-signed certificate
   ca: fs.readFileSync(caFileStr)
 };
 
-var socketTls = tls.connect(options, () => {
-  console.log('testing container connected!',
-              socketTls.authorized ? 'authorized' : 'unauthorized');
-  // process.stdin.pipe(socketTls);
-  // process.stdin.resume();
-  // socketTls.write("update");
+let socketTls = tls.connect(options, () => {
   socketsTls.testingCon[container.id] = socketTls;
   socket.emit("testingContainerConnected", container.id);
-
 })
 
 .setEncoding('utf8')
@@ -68,8 +59,9 @@ var socketTls = tls.connect(options, () => {
 
 })
 .on("error", function(err) {
+  console.log(err);
   // socket.emit("error", err);
-  socket.emit("connectionErrTestingContainer", container.id, "connection error");
+  socket.emit("connectionErrTestingContainer", container.id, err );
   // socket.emit("connectionErr", {err, index} );
   // socket.emit("blockActions", {index});
 })

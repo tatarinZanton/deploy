@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <b-navbar toggleable type="dark" variant="light">
+        <b-navbar toggleable type="dark" variant="primary">
           <b-nav-toggle target="nav_collapse"></b-nav-toggle>
           <b-navbar-brand href="#">Navion deployer</b-navbar-brand>
           <b-collapse is-nav id="nav_collapse">

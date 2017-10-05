@@ -178,10 +178,10 @@ export default {
       this.getCompaniesStatusTls(index)
     })
     this.socket.on('consoleOut', data => {
-      console.dir(data);
+    
       this.companies[data.index].consoleOut += data + "|||";
     })
-    
+
     this.socket.on('clientConnected', index => {
       this.companies[index].conStatus = "Client connected!"
       // console.log("client " + app.companies[index].company_name + " connected")

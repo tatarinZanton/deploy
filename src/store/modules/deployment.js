@@ -27,7 +27,8 @@ const mutations = {
     state.testingContainer = state.testingContainer.map((c, i) => {
 
       if (c.id === idCon) {
-        c.testingContainerStatus = msg
+        c.testingContainerStatus = msg.errno;
+        c.connection = false;
       }
       return c
     })
@@ -36,7 +37,8 @@ const mutations = {
     state.testingContainer = state.testingContainer.map((c, i) => {
 
       if (c.id === id) {
-        c.testingContainerStatus = "Connected!"
+        c.testingContainerStatus = "Connected!";
+        c.connection = true;
       }
       return c
     })

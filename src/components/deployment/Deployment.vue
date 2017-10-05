@@ -14,7 +14,12 @@
       <template slot="port" scope="row">{{row.value}}</template>
       <template slot="hostname" scope="row">{{row.value}}</template>
       <template slot="tls_key" scope="row">{{row.value}}</template>
-      <template slot="testingContainerStatus" scope="row">{{row.value}}</template>
+      <template slot="testingContainerStatus" scope="row"
+
+       >
+       <span v-bind:class="[ row.item.connection ? connected : errorCon  ]">
+      {{row.value}}</span>
+    </template>
       <template slot="forUpload" scope="row">
         <b-form-checkbox
           id="checkbox1"
@@ -23,6 +28,10 @@
           v-model="row.value"
         >
       </b-form-checkbox>
+      </template>
+      <template slot="actions" scope="row">
+        <b-button v-if="!row.item.connection"  v-on:click="connectToTestingContainer(row.item)">Установить соединение</b-button>
+        <b-button v-else v-on:click="disconnectFromTestingContainer(row.item)">Разорвать соединение</b-button>
       </template>
     </b-table>
 
@@ -55,6 +64,8 @@
           forUpload:{label:"Выгрузка", sortable: true},
           actions:  { label: 'Управение' },
         },
+        connected : "connected",
+        errorCon  : "errorCon"
       }
     },
 
@@ -64,8 +75,12 @@
         'setConnectionErrTestingContainer',
         'setConnectionStatusTestingContainer'
       ]),
-    connectToTestingContainer: function(){
-      this.socket.emit("connectToTestingContainer", this.testingContainer);
+    connectToTestingContainer: function(container){
+      this.socket.emit("connectToTestingContainer", container);
+    },
+
+    disconnectFromTestingContainer: function(container){
+      this.socket.emit("disconnectFromTestingContainer", container);
     }
 
     },
@@ -82,19 +97,17 @@
           this.socket.emit("getTestingContainerForDeploy");
         })
       } else {
-
         this.socket.emit("getTestingContainerForDeploy")
       }
 
       this.socket.on('testingContainerToDeploy', (data) => {
         this.setTestingContainerToDeploy(data);
       })
-      this.socket.on('connectionErrTestingContainer', (i, m) => {
+      this.socket.on('connectionErrTestingContainer', (i, m, e) => {
 
         this.setConnectionErrTestingContainer({index:i, msg:m});
       })
       this.socket.on('testingContainerConnected', (id) => {
-        console.log(id);
         this.setConnectionStatusTestingContainer(id);
       })
 
@@ -104,5 +117,10 @@
   </script>
 
   <style scoped>
-
+    .errorCon{
+      color:red;
+    }
+    .connected{
+      color:green;
+    }
   </style>

@@ -52,7 +52,7 @@ const routes = [
           },
           {
             path: 'list/:hash',
-            component: resolve => require(['./components/versions/EditVersionsList'], resolve)
+            component: resolve => require(['./components/versions/MakeVersion'], resolve)
           },
           {
             path: 'listdb',

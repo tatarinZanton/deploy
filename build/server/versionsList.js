@@ -3,7 +3,8 @@ function run(socket){
   var versionsData="", result, error,
   nrc = require('node-run-cmd'),
   commands = [
-    "git log --pretty=format:'%H|%at|%D|%s' -5"
+    {command:"git checkout master",  onData: function() {return;} },
+    "git log --pretty=format:'%H|%at|%D|%s' -10"
   ],
   options = { cwd: config.pathToProg.replace (/"/g, ""),
               onData: function(data){

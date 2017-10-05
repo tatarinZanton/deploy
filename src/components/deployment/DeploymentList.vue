@@ -10,6 +10,7 @@
       show-empty
       :items="deploymentList"
       :fields="fields"
+      
     >
     <template slot="name" scope="row">{{row.value}}</template>
     <template slot="referenceBranch" scope="row">{{row.value}}</template>
@@ -48,7 +49,8 @@
           creationTime:{ label: 'Время создания', sortable: true },
           actions:  { label: 'Управление' },
         },
-        deploymentListEditor:{}
+        deploymentListEditor:{},
+        filter: null
       }
     },
 
